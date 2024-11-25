@@ -29,7 +29,14 @@ const TemperatureChart = ({temperatureDay, minTempArray, maxTempArray}) => {
     const options = {
       responsive: true,
       maintainAspectRatio: false,
-
+      layout: {
+        padding: {
+          left: 20,  
+          right: 20,
+          top: 20,  
+          bottom: 20 
+        }
+      },
       plugins: {
         title: {
           display: true,

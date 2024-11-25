@@ -3,12 +3,11 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet'; 
 import 'leaflet/dist/leaflet.css'; 
 import axios from 'axios';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import InfoModal from '../components/InfoModal';
 
+
 const Map = () => {
-    const position = [1.404, 103.689]; 
+    const position = [1.35, 103.769]; 
     const [weatherMaps, setWeatherMaps] = useState([]);
     const [forecastArray, setForecastArray] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -30,11 +29,6 @@ const Map = () => {
         getLocationMap();
     }, []);
 
-    L.Icon.Default.mergeOptions({
-        iconUrl: markerIcon,
-        shadowUrl: markerShadow,
-    });
-
     const handleShowModal = (location) => {
         setSelectedLocation(location);
         setShowModal(true);
@@ -45,13 +39,19 @@ const Map = () => {
         setSelectedLocation(null);
     };
 
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+      iconUrl: require('leaflet/dist/images/marker-icon.png'),
+      shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+    });
+
     return (
     <div>
       <MapContainer
         center={position}
-        zoom={13}
-        scrollWheelZoom={false}
-        style={{ height: "1200px", width: "100%" }}
+        zoom={12}
+        scrollWheelZoom={true}
+        style={{ height: "900px", width: "100%" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

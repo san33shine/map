@@ -12,6 +12,7 @@ import ThunderyShowers from '../static/thundery-showers.png'
 import HumidityChart from './HumidityChart';
 import RadiationChart from './RadiationChart';
 import TemperatureChart from './TemperatureChart';
+import MiniMapBox from './MiniMapBox';
 
 const InfoModal = ({ show, handleClose, location, forecastArray }) => {
     const [ rhTime, setRhTime ] = useState([]);
@@ -52,7 +53,10 @@ const InfoModal = ({ show, handleClose, location, forecastArray }) => {
         try {
           const response = await axios.get(url);
           const data = response.data;
-          setRhTime(data.hourly.time);
+          const hourlyTime = data.hourly.time;
+          const rhTimeHour = hourlyTime.map(time => 'D'+time.slice(-8));
+          setRhTime(rhTimeHour);
+
           setRelativeHumidity(data.hourly.relativehumidity_2m);
           setDirectRadiation(data.hourly.direct_radiation);
           setTemperatureDay(data.daily.time);
@@ -78,19 +82,19 @@ const InfoModal = ({ show, handleClose, location, forecastArray }) => {
       </Modal.Header>
       <Modal.Body>
         <div id='humidity'>
-          <HumidityChart
+          <HumidityChart 
             rhTime={rhTime}
             relativeHumidity={relativeHumidity}
           />
         </div>
         <div id='radiation'>
-          <RadiationChart id='rad-chart'
+          <RadiationChart 
             rhTime={rhTime}
             directRadiation={directRadiation}
           />
         </div>
         <div id='temperature'>
-          <TemperatureChart id='temperature-chart'
+          <TemperatureChart 
             temperatureDay={temperatureDay}
             minTempArray={minTempArray}
             maxTempArray={maxTempArray}
@@ -101,6 +105,11 @@ const InfoModal = ({ show, handleClose, location, forecastArray }) => {
           <img 
             src={getWeatherImage(locationWeather)}
             alt={locationWeather} 
+          />
+        </div>
+        <div id='minimap'>
+          <MiniMapBox 
+            position = {[location.label_location.latitude, location.label_location.longitude]}
           />
         </div>
       </Modal.Body>
