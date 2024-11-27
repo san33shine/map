@@ -9,9 +9,9 @@ const MiniMapBox = ({position}) => {
     <div>
       <MapContainer
         center={position}
-        zoom={15}
+        zoom={14}
         scrollWheelZoom={true}
-        style={{ height: "900px", width: "100%" }}
+        style={{ height: "400px", width: "100%" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

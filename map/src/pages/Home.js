@@ -4,6 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css'; 
 import axios from 'axios';
 import InfoModal from '../components/InfoModal';
+import SearchBar from '../components/SearchBar';
 
 
 const Map = () => {
@@ -47,38 +48,51 @@ const Map = () => {
 
     return (
     <div>
-      <MapContainer
-        center={position}
-        zoom={12}
-        scrollWheelZoom={true}
-        style={{ height: "900px", width: "100%" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {weatherMaps.map((location) => (
-          <Marker
-            key={location.name}
-            position={[
-              location.label_location.latitude,
-              location.label_location.longitude,
-            ]}
-            eventHandlers={{
-              click: () => handleShowModal(location),
-            }}
+      <div>        
+</div>
+<div>
+  <div className='map'>
+  <MapContainer
+          center={position}
+          zoom={12}
+          scrollWheelZoom={true}
+          style={{ height: "900px", width: "100%" }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-        ))}
-      </MapContainer>
-
-      {selectedLocation && (
-        <InfoModal
-          show={showModal}
-          handleClose={handleCloseModal}
-          location={selectedLocation}
-          forecastArray={forecastArray}
-        />
-      )}
+          {weatherMaps.map((location) => (
+            <Marker
+              key={location.name}
+              position={[
+                location.label_location.latitude,
+                location.label_location.longitude,
+              ]}
+              eventHandlers={{
+                click: () => handleShowModal(location),
+              }}
+            />
+          ))}
+        </MapContainer>
+        {selectedLocation && (
+          <InfoModal
+            show={showModal}
+            handleClose={handleCloseModal}
+            location={selectedLocation}
+            forecastArray={forecastArray}
+          />
+        )}
+  </div>
+  <div className='searchbar-container'>
+    <SearchBar 
+    locationMap={weatherMaps}
+    forecastArray={forecastArray}
+    />
+  </div>
+  
+</div>
+      
     </div>
     );
 };
